@@ -5,32 +5,14 @@
 	},
 	"setting": {
 		"urlCheck": true,
-		"es6": true,
-		"postcss": true,
-		"preloadBackgroundData": false,
 		"minified": true,
-		"newFeature": true,
-		"coverView": true,
-		"autoAudits": false,
-		"showShadowRootInWxmlPanel": true,
-		"scopeDataCheck": false,
-		"checkInvalidKey": true,
-		"checkSiteMap": true,
-		"uploadWithSourceMap": true,
-		"babelSetting": {
-			"ignore": [],
-			"disablePlugins": [],
-			"outputPath": ""
-		},
-		"useCompilerModule": false,
-		"userConfirmedUseCompilerModuleSwitch": false
+		"es6": true,
+		"postcss": true
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.9.2",
 	"appid": "wx36810bffae6eff0f",
 	"projectname": "考拉上学",
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -40,13 +22,29 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
+			"current": -1,
+			"list": []
+		},
+		"gamePlugin": {
 			"current": -1,
 			"list": []
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": []
+			"list": [
+				{
+					"id": -1,
+					"name": "sub_school/pages/detail/index",
+					"pathName": "sub_school/pages/detail/index",
+					"query": "id=300",
+					"scene": null
+				}
+			]
 		}
 	}
 }

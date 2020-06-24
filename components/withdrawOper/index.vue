@@ -6,7 +6,7 @@
 				<view class="title">提现申请</view>
 				<view class="inputVal">
 					输入金额
-					<input class="input" type="number" v-model="withdrawMoney" @blur="inputBlur"/>
+					<input class="input" type="number" v-model="withdrawMoney"  @blur="inputBlur"/>
 					元
 				</view>
 				<view class="oper">
@@ -16,6 +16,7 @@
 				<view class="iconfont icon-guanbi" @click="cancelBtn(1)"></view>
 			</view>
 		</uni-popup>
+		
 		<uni-popup ref='tipPopup'>
 			<view class="tipPopup">
 				<view class="title">提现申请</view>
@@ -28,6 +29,7 @@
 				<view class="iconfont icon-guanbi" @click="cancelBtn(2)"></view>
 			</view>
 		</uni-popup>
+		
 		<!-- 提现模块 -->
 	</view>
 </template>
@@ -41,7 +43,7 @@
 		data(){
 			return {
 				withdrawMoney:null,
-				wxNumber:'13544412322'
+				wxNumber:''
 			}
 		},
 		computed: {
@@ -50,14 +52,23 @@
 		onLoad(){
 			
 		},
+		mounted(){
+			this.$nextTick( () => {
+				this.wxNumber = this.$contactPhone
+			})
+		},
 		methods:{
 			//兼容苹果手机上 键盘升起会导致页面上移问题
-			inputBlur(){
+			inputBlur(e){
 				uni.pageScrollTo({
 					scrollTop:0,
 					duration:0
 				})
+				    //输入金额保留两位小数
+					e.detail.value = e.detail.value.match(/\d+\.?\d{0,2}/);
+					this.withdrawMoney=e.detail.value
 			},
+			
 			open(type){
 				if(type === 1){
 					this.withdrawMoney = null
@@ -66,6 +77,7 @@
 					this.$refs.tipPopup.open()
 				}
 			},
+			
 			//取消弹窗
 			cancelBtn(type) {
 				if(type === 1){
@@ -74,10 +86,12 @@
 					this.$refs.tipPopup.close()
 				}
 			},
+			
 			//复制微信号
 			copy(){
 				copyValue(this.wxNumber)
 			},
+		
 			// 申请提现
 			withdrawClick(){
 				if(this.withdrawMoney){

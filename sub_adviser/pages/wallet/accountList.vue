@@ -63,18 +63,22 @@
 					}
 				],
 				current_page:1,
-				last_page:null,
+				last_page:0,
 			}
 		},
 		computed: {
 			...mapState(['userInfo'])
 		},
+		
 		onLoad(){
 			this.getDataList()
 		},
+		
 		methods:{
 			tabChange(index){
 				this.current = index
+				this.current_page = 1
+				this.last_page = 0
 				this.list = null
 				this.getDataList()
 			},
@@ -95,8 +99,8 @@
 					params:params
 				}).then(res => {
 				    this.list = list.concat(res.data.data || [])
-					this.current_page = res.meta.current_page
-					this.last_page = res.meta.last_page
+					this.current_page = res.data.meta.current_page
+					this.last_page = res.data.meta.last_page
 				}).catch(err => {
 				})
 			},

@@ -86,17 +86,11 @@ var render = function() {
       _vm.info.koala.growth_values.next.registration_count) *
       100
   )
-  var m1 = parseInt(
-    (_vm.info.koala.growth_values.current.registration_count /
-      _vm.info.koala.growth_values.next.registration_count) *
-      100
-  )
   _vm.$mp.data = Object.assign(
     {},
     {
       $root: {
-        m0: m0,
-        m1: m1
+        m0: m0
       }
     }
   )
@@ -218,10 +212,30 @@ var _utils = __webpack_require__(/*! @/common/utils.js */ 16); //
 //
 //
 //
-var _default2 = { components: {}, props: { info: { type: Object, default: function _default() {} } }, data: function data() {return {};}, computed: {}, onLoad: function onLoad() {}, methods: { //个人信息跳转
-    adviserInfoLink: function adviserInfoLink() {(0, _utils.checkLogin)().then(function () {uni.navigateTo({ url: '/sub_adviser/pages/personalInfo/index' });});}, //绑定微信
-    settingClick: function settingClick() {(0, _utils.checkLogin)().then(function () {uni.navigateTo({ url: '/sub_user/pages/bindwx/index' });});}, //复制
-    copyBtn: function copyBtn() {var _this = this;(0, _utils.checkLogin)().then(function () {(0, _utils.copyValue)(_this.info.koala.code);});} } };exports.default = _default2;
+var _default2 = { components: {}, props: { info: { type: Object, default: function _default() {} } }, data: function data() {return { number: 0 };}, computed: {}, mounted: function mounted() {this.judge();}, onLoad: function onLoad() {}, methods: { //个人信息跳转
+    adviserInfoLink: function adviserInfoLink() {(0, _utils.checkLogin)().then(function () {uni.navigateTo({ url: '/sub_adviser/pages/personalInfo/index' });});}, // 成长值优化
+    judge: function judge() {this.number = this.info.koala.growth_values.current.registration_count / this.info.koala.growth_values.next.registration_count * 100;if (this.number != 0) {var num = this.number.toString().split(".")[1];if (num) {if (num.toString().length < 2) {this.number = this.number.toFixed(1);} else if (num.toString().length >= 2) {this.number = this.number.toFixed(2);
+          }
+        } else {
+          parseInt(this.number);
+        }
+      }
+    },
+
+    //绑定微信
+    settingClick: function settingClick() {
+      (0, _utils.checkLogin)().then(function () {
+        uni.navigateTo({
+          url: '/sub_user/pages/bindwx/index' });
+
+      });
+    },
+    //复制
+    copyBtn: function copyBtn() {var _this = this;
+      (0, _utils.checkLogin)().then(function () {
+        (0, _utils.copyValue)(_this.info.koala.code);
+      });
+    } } };exports.default = _default2;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

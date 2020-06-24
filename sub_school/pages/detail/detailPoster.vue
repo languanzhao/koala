@@ -14,7 +14,7 @@
 						<view class="title">{{schoolInfo.education || ''}} {{schoolInfo.property || ''}}</view>
 					</view>
 					<view class="item">
-						<view class="iconfont icon-location-active"></view>
+						<view class="iconfont icon-location-active" v-if="schoolInfo.province || schoolInfo.city || schoolInfo.district"></view>
 						<view class="title">{{schoolInfo.province || ''}} {{schoolInfo.city || ''}} {{schoolInfo.district || ''}}</view>
 					</view>
 				</view>
@@ -37,7 +37,7 @@
 						<view class="title">{{schoolInfo.education || ''}} {{schoolInfo.property || ''}}</view>
 					</view>
 					<view class="item">
-						<view class="iconfont icon-location-active"></view>
+						<view class="iconfont icon-location-active" v-if="schoolInfo.province || schoolInfo.city || schoolInfo.district"></view>
 						<view class="title">{{schoolInfo.province || ''}} {{schoolInfo.city || ''}} {{schoolInfo.district || ''}}</view>
 					</view>
 				</view>
@@ -255,14 +255,14 @@
 						context.drawImage('/static/image/icon/icon_protype.png', 20, 36, 10, 10)
 						context.setFillStyle('#666')
 						context.setFontSize(12)
-						context.fillText(this.schoolInfo.education || '' + ' ' + this.schoolInfo.property || '', 36, 46)
+						context.fillText((this.schoolInfo.education || '') + ' ' + (this.schoolInfo.property || ''), 36, 46)
 						context.stroke()
 						// 地址
 						if(this.schoolInfo.province || this.schoolInfo.city || this.schoolInfo.district){
 							context.drawImage('/static/image/icon/icon_area.png',120, 35, 8, 12)
 							context.setFillStyle('#666')
 							context.setFontSize(12)
-							context.fillText(this.schoolInfo.province || '' + ' ' + this.schoolInfo.city || '' + ' ' + this.schoolInfo.district || '', 134, 46)
+							context.fillText((this.schoolInfo.province || '') + ' ' + (this.schoolInfo.city || '') + ' ' + (this.schoolInfo.district || ''), 134, 46)
 							context.stroke()
 						}
 										

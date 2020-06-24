@@ -168,24 +168,24 @@
 						}).catch(err => {
 									
 						})
-						//锁粉
-						this.$http({
-							api: api.userRelations,
-							method: 'POST',
-							params:{
-								code:this.invitedCode
-							},
-							header:{
-								'Content-Type':'application/x-www-form-urlencoded'
-							}
-						}).then(res => {
-							
-						}).catch(err => {
-							// uni.showToast({
-							// 	icon:'none',
-							// 	title:"绑定上级失败，请联系客服"
-							// })
-						})
+						if(this.invitedCode){
+							//锁粉
+							this.$http({
+								api: api.userRelations,
+								method: 'POST',
+								params:{
+									code:this.invitedCode
+								},
+								header:{
+									'Content-Type':'application/x-www-form-urlencoded'
+								}
+							}).then(res => {
+								
+							}).catch(err => {
+								
+							})
+						}
+						
 						//注册成功跳转到入场页
 						uni.showToast({
 							title:'注册成功',

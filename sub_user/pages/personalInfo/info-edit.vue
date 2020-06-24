@@ -86,7 +86,7 @@
 				<view class="title">
 					家长电话
 				</view>
-				<input type="number" v-model="info.koala.parents_phone" class="input" placeholder="请输入" placeholder-class="inputtips"  @blur="inputBlur"/>
+				<input type="number" maxlength="11" v-model="info.koala.parents_phone" class="input" placeholder="请输入" placeholder-class="inputtips"  @blur="inputBlur"/>
 			</view>
 			<view class="item lastNoBottom" @click="addressClick">
 				<view class="title">

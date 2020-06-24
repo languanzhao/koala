@@ -8,12 +8,12 @@ Vue.prototype.$store = store
 //数据请求
 import { request } from './common/request.js'
 // https://shop.test.gzzhongw.net/   http://shop.test/
-Vue.prototype.$baseUrl = 'https://shop.test.gzzhongw.net/'
+// Vue.prototype.$baseUrl = 'https://shop.test.gzzhongw.net/'
 Vue.prototype.$http = request
 
 //项目
 Vue.prototype.$projectUrl = 'https://koala.gzzhongw.net/'
-Vue.prototype.$contactPhone = '13544412322'
+// Vue.prototype.$contactPhone = '13544412322'
 //  全局组件之间通信
 Vue.prototype.$eventHub= Vue.prototype.$eventHub ||  new Vue()        // 巴士
 

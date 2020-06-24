@@ -4,8 +4,8 @@
 		<transfer-info :transferObj="transferObj"></transfer-info>
 		<view style="padding:30rpx 20rpx 0;">
 			<view class="uploadTitle">上传凭证</view>
-			<view class="localImage">
-				<image v-if="voucherObj.id" class="image" :src="voucherObj.localImage" mode=""></image>
+			<view class="localImage" >
+				<image v-if="voucherObj.id" @click="getPreview"   class="image" :src="voucherObj.localImage" mode=""></image>
 				<view class="uploadTip" @click="upload" v-else>
 					<view class="iconfont icon-paizhao"></view>
 				</view>
@@ -52,7 +52,7 @@ export default {
 						value:'转账支付'
 					},
 					{
-						key:'对公账号',
+						key:'对公账户',
 						value:info.tInfo.corporate_account.account_name
 					},
 					{
@@ -91,6 +91,15 @@ export default {
 		},
 		deleteImage(){
 			this.voucherObj = {}
+		},
+		//预览
+		getPreview(){
+				let localImage = []
+				 localImage.push(this.voucherObj.localImage)
+				uni.previewImage({
+					urls: localImage,
+					current: localImage[0],
+				})
 		},
 		submit(){
 			let { sInfo,tInfo,majorObj,applyId } = this.schoolInfo

@@ -22,7 +22,6 @@
 							<view>考拉上学助手</view>
 							<view class="time"></view>
 						</view>
-						<view class="content" style="color:#fff;">摘要信息摘要信息摘要信息摘要信息摘要信息...</view>
 					</view>
 				</view>
 			</block>
@@ -167,7 +166,7 @@
 		},
 		data() {
 			return {
-				icon_sysMsg: this.$projectUrl + 'koala_images/img/icon_sysMsg.png',
+				icon_sysMsg: '',
 				weapp_check_bool: true,
 				navs: ['消息', '通知'],
 				navId: 0,
@@ -207,6 +206,7 @@
 			...mapState(['userInfo','roles'])
 		},
 		onLoad() {
+			this.icon_sysMsg = this.$projectUrl + 'koala_images/img/icon_sysMsg.png'
 			// #ifdef H5
 			hideMenuItems(jweixin)
 			// #endif
@@ -472,12 +472,9 @@
 
 		// 消息列表
 		.message {
-			// padding:20rpx 0;
-			padding-left: 30rpx;
+			padding:20rpx;
 			border-top: 1px solid #f5f5f5;
 			display: flex;
-			align-items: center;
-
 			image {
 				width: 86rpx;
 				height: 86rpx;
@@ -486,7 +483,7 @@
 
 			.info {
 				flex: 1;
-				padding: 20rpx 0;
+				padding-bottom: 20rpx;
 				margin-left: 20rpx;
 				border-bottom: 1px solid #f5f5f5;
 

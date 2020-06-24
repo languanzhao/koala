@@ -16,11 +16,10 @@
 					<text class="finish">已完成{{finiseLength}}/{{taskList.length}}</text>
 				</view>
 				<view class="task-list">
-					<!-- <view class="item iconfont icon-huojian"></view> -->
-					<view class="item" v-for="(item,index) of taskList" :key="index">
-						<image class="image" :src="item.status === 'success' || item.status === 'received' ? item.task.extra.status_icons.completed : item.task.extra.status_icons.uncompleted" mode=""></image>
-						<view class="amount" v-if="item.status != 'success' && item.status != 'received'">{{item.task.extra.reward.amount}}</view>
-					</view>
+					<view :class="['item',receivedLength >= item.num ? 'current' : '']" v-for="(item,index) of taskProcessList" :key='index'>
+						<image class="image" v-if="receivedLength >= item.num" :src="item.completed" mode=""></image>
+						<image class="image" v-else :src="item.unCompleted" mode=""></image>
+					</view>	
 				</view>
 				<view class="summary">完成所有任务可提现{{taskTotalNum}}额度</view>
 			</view>
@@ -75,15 +74,17 @@
 				receivedNum:0,
 				taskTotalNum:0,
 				finiseLength:0,
+				receivedLength:0,
 				obj:null,
 				statusList:{
 					'pending':'去完成',
 					'underway':'审核中',
 					'success':'领取',
 					'failed':'去完成',
-					'received':'已领取',
+					'received':'已完成',
 				},
-				taskList:[]
+				taskList:[],
+				taskProcessList:[]
 			}
 		},
 		computed: {
@@ -114,6 +115,30 @@
 					//已完成的数量
 					let finishList = res.data.filter(item=> item.status === 'success' || item.status === 'received')
 					
+					//已领取的数量
+					let receivedList = res.data.filter(item=> item.status === 'received')
+				    this.taskProcessList = [
+						{
+							num:1,
+							completed:'https://koala.gzzhongw.net/koala_images/task/success01.png',
+							unCompleted:'https://koala.gzzhongw.net/koala_images/task/none01.png'
+						},
+						{
+							num:2,
+							completed:'https://koala.gzzhongw.net/koala_images/task/success02.png',
+							unCompleted:'https://koala.gzzhongw.net/koala_images/task/none02.png'
+						},
+						{
+							num:3,
+							completed:'https://koala.gzzhongw.net/koala_images/task/success03.png',
+							unCompleted:'https://koala.gzzhongw.net/koala_images/task/none03.png'
+						}
+					]
+					this.receivedLength = receivedList.length
+					this.taskProcessList.splice(receivedList.length,0,{
+						num:receivedList.length,
+						completed:'https://koala.gzzhongw.net/koala_images/task/huojian.png'
+					})
 					this.finiseLength = finishList.length
 					this.receivedNum = receivedNum
 					this.taskTotalNum = sum
@@ -227,7 +252,7 @@
 		}
 
 		.center {
-			margin: -150rpx 30rpx 20rpx;
+			margin: -140rpx 30rpx 20rpx;
 			background: #fff;
 			border-radius: 20rpx;
 			position: relative;
@@ -255,22 +280,18 @@
 					margin: 30rpx 0;
 					.item{
 						position: relative;
-						background: #f4f4f4;
 						width: 120rpx;
 						height: 120rpx;
 						text-align: center;
 						line-height: 120rpx;
 						border-radius: 50%;
-						margin: 0 30rpx;
-						z-index: 2;
-						&:first-of-type{
-							background: none;
-							font-size: 50rpx;
-							color: #ff5500;
-						}
+						margin: 0 20rpx;
+						
 						.image{
 							width: 120rpx;
 							height: 120rpx;
+							position: relative;
+							z-index: 2;
 						}
 						.amount{
 							position: absolute;
@@ -283,16 +304,43 @@
 							color: #fff;
 						}
 					}
-					// .item::after{
-					// 	content: '';
-					// 	position: absolute;
-					// 	top: 40rpx;
-					// 	right: 0;
-					// 	width: 60rpx;
-					// 	height: 1px;
-					// 	background: #ccc;
-					// 	z-index: -1;
-					// }
+					.huojian{
+						background: none;
+						font-size: 50rpx;
+						color: #ff5500;
+					}
+					.item:first-of-type{
+						&::after{
+							content: '';
+							position: absolute;
+							background:none;
+							color: #fff;
+							
+						}
+						
+					}
+					.item::after{
+						content: '';
+						position: absolute;
+						top: 50%;
+						transform: translateY(-50%);
+						right: 0;
+						width: 200rpx;
+						height: 2px;
+						background: #ccc;
+						z-index: -2;
+					}
+					.current::after{
+						content: '';
+						position: absolute;
+						top: 50%;
+						transform: translateY(-50%);
+						right: 0;
+						width: 180rpx;
+						height: 2px;
+						background: #ff5500;
+						z-index: -2;
+					}
 				}
 				.summary {
 					text-align: center;

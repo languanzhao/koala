@@ -71,6 +71,8 @@
 			}
 		},
 		onLaunch: function() {
+			
+			
 			// #ifdef H5
 			    this.checkIsPc()
 			// #endif
@@ -78,7 +80,14 @@
 			this.getUserInfo()
 		},
 		onShow: function() {
-			
+			uni.request({
+			    url: 'https://koala.gzzhongw.net/h6/config.json?time=' + Math.random().toString(36), 
+				success: (res) => {
+					console.log(res,'config')
+					Vue.prototype.$baseUrl = res.data.baseUrl
+					Vue.prototype.$contactPhone = res.data.contactPhone
+				}
+			})
 		},
 		onHide: function() {
 			

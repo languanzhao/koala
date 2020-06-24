@@ -22,6 +22,7 @@ export function request({api, method = "POST", params, header = {} }) {
 					}else if(res.statusCode === 401){
 						if(store.state.userInfo && store.state.userInfo.id){
 							uni.clearStorageSync()
+							sessionStorage.removeItem("loginCode")
 							store.commit('clearUserInfo')
 							uni.navigateTo({
 								url:'/pages/login/index'

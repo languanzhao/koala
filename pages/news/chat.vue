@@ -68,6 +68,7 @@
 		},
 		data() {
 			return {
+				contactPhone:'',
 				applyedBool:false,
 				type:'',
 				schoolId:'',
@@ -84,14 +85,19 @@
 			
 		},
 		onLoad(options) {
+			this.contactPhone = this.$contactPhone
 			if(options.schoolId){
 				this.schoolId = options.schoolId
 				this.getSchooldetail(options.schoolId)
 			}
-			// #ifdef H5
-				this.getLatestApplications().then(() => {
+			
+			this.getLatestApplications().then(() => {
+				// #ifdef H5
 					this.openService()
-				})
+				// #endif
+			})
+			
+			// #ifdef H5
 				hideMenuItems(jweixin)
 			// #endif
 			
@@ -115,7 +121,7 @@
 			//拨打电话
 			makePhoneCall(){
 				uni.makePhoneCall({
-				    phoneNumber: this.$contactPhone
+				    phoneNumber: this.contactPhone
 				});
 			},
 			//打开客服聊天界面

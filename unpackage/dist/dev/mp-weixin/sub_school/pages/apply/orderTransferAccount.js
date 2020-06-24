@@ -175,7 +175,7 @@ __webpack_require__.r(__webpack_exports__);
           value: '转账支付' },
 
         {
-          key: '对公账号',
+          key: '对公账户',
           value: info.tInfo.corporate_account.account_name },
 
         {

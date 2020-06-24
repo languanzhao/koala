@@ -1013,6 +1013,7 @@ page.data-v-2bf1dc1f {
 .joinUs .part .title.data-v-2bf1dc1f {
   color: #838383;
   font-size: 20rpx;
+  text-align: center;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;

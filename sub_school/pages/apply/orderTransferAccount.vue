@@ -9,7 +9,7 @@
 				转账时请仔细核对账号，如遇任何问题请务必立即联系老师
 			</view>
 			<view class="btn">
-				<view class="leftBtn" @click="jumpchat">联系老师代缴</view>
+				<view class="leftBtn" @click="jumpchat">联系老师交费</view>
 				<view class="rightBtn" @click="jumpTransferAccount">上传转账凭证</view>
 			</view>
 		</view>
@@ -41,7 +41,7 @@
 							value:'转账支付'
 						},
 						{
-							key:'对公账号',
+							key:'对公账户',
 							value:info.tInfo.corporate_account.account_name
 						},
 						{

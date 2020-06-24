@@ -1823,6 +1823,7 @@ function request(_ref) {var api = _ref.api,_ref$method = _ref.method,method = _r
         } else if (res.statusCode === 401) {
           if (_store.default.state.userInfo && _store.default.state.userInfo.id) {
             uni.clearStorageSync();
+            sessionStorage.removeItem("loginCode");
             _store.default.commit('clearUserInfo');
             uni.navigateTo({
               url: '/pages/login/index' });
@@ -16264,8 +16265,10 @@ function login_wx_h5(type, paramsCode) {
   var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=".concat(APPID, "&redirect_uri=").concat(REDIRECT_URI, "&response_type=code&scope=").concat(SCOPE, "&state=STATE#wechat_redirect");
   if (!loginCode && !code) {//没授权
     window.location.replace(url);
-  } else {
+  } else if (!loginCode) {
     window.sessionStorage.setItem('loginCode', code);
+    history.back();
+  } else {
     if (!that.$store.state.userInfo.id) {
       //用户没有登录
       that.$http({
@@ -26404,7 +26407,6 @@ module.exports = {
   titledFilter: 'koala/v1/schools/titled/filter', //211 985 
   taskList: 'koala/v1/assignments', //助学计划任务
   getTaskMoney: 'koala/v1/assignment', //领取奖励
-  //以下接口暂未使用
   getUserPermissions: 'koala/v1/user/permissions', //获取用户权限
   koalaInfo: 'koala/v1/koalas', //用户信息 koala/v1/user中的 koala:{}部分，当从商城跳到koala时免登录 app1 =》 koala:{} userInfo
   userRelations: 'koala/v1/user/relations', //绑定上级 code 

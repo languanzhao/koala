@@ -82,7 +82,7 @@
 		},
 		data(){
 			return {
-				contactPhone:this.$contactPhone,
+				contactPhone:"",
 				path:'',
 				logo:this.$projectUrl + 'koala_images/logo.png',
 				type:null,
@@ -99,6 +99,7 @@
 			...mapState(['userInfo'])
 		},
 		onLoad(options){
+			this.contactPhone = this.$contactPhone
 			if(options.type){
 				this.type = Number(options.type)
 			}
@@ -310,6 +311,7 @@
 			.title{
 				color:#838383;
 				font-size: 20rpx;
+				text-align: center;
 				display:flex;
 				align-items: center;
 				margin:0 auto;

@@ -58,22 +58,19 @@
 		data() {
 			return {
 				posterShow:false,
-				bool:false,
 				posterCanvasImage:'',
 				current:0,
 				canvasImageList:[]
 			}
 		},
 		computed:{
-			...mapState(['userInfo'])
+			...mapState(['userInfo','roles'])
 		},
 		onLoad(options){
 			// #ifdef H5
 			hideMenuItems(jweixin)
 			// #endif
-			if(options.bool){
-				this.bool = true
-			}
+			
 			// #ifdef H5
 				this.make()
 			// #endif
@@ -133,7 +130,7 @@
 			//生成二维码 h5 或 app
 			make() {
 				let url = this.$projectUrl + 'h6'
-				if(this.bool){
+				if(this.roles[0]){
 					url = url + '?invitedCode=' + this.userInfo.koala.code
 				}
 				  uQRCode.make({
@@ -255,28 +252,7 @@
 						context.fillRect(0, 0, 300, 420)
 						//顶部图片
 						context.drawImage(bgRes.path, 0, 0, 305, 420)
-						// // 考拉上学
-						// context.setFontSize(16)
-						// context.setTextAlign('center')
-						// context.fillText('考拉上学', 150, 25)
-						// context.stroke()
-						// // 书中自有黄金屋
-						// context.setFontSize(26)
-						// context.setTextAlign('center')
-						// context.setFillStyle('#fff')
-						// context.fillText('书中自有黄金屋', 150, 70)
-						// context.stroke()
-						// // 求学有考拉上学，
-						// context.setFontSize(12)
-						// context.setTextAlign('center')
-						// context.fillText('求学有考拉上学，', 130, 100)
-						// context.stroke()
-						// // 我的前途不迷茫
-						// context.setFontSize(12)
-						// context.setTextAlign('center')
-						// context.fillText('我的前途不迷茫', 150, 120)
-						// context.stroke()
-						if(this.bool){
+						if(this.roles[0]){
 							// 邀请码
 							context.setFontSize(14)
 							context.setFillStyle('#fff')

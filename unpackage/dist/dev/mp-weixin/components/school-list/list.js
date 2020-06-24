@@ -443,7 +443,7 @@ var _vuex = __webpack_require__(/*! vuex */ 9);function _interopRequireDefault(o
         }).
         catch(function (err) {});
       }
-    }, 3000, false),
+    }, 1000, false),
     getRecommendList: function getRecommendList() {var _this4 = this;
       this.$http({
         api: _api.default.getSchoolList,

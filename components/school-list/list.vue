@@ -323,7 +323,7 @@ export default {
 					})
 					.catch(err => {});
 			}
-		},3000,false),
+		},1000,false),
 		getRecommendList(){
 			this.$http({
 				api: api.getSchoolList,

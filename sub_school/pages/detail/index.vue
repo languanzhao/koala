@@ -27,7 +27,7 @@
 					</view>
 				</view>
 				<view class="detail_title u-skeleton-rect">{{detail.name}}<text class="planLabel">助学计划</text></view>
-				<view class="school_code u-skeleton-rect">招生代码：{{detail.recruit_code}}</view>
+				<view class="school_code u-skeleton-rect">招生代码：<text v-if="detail.recruit_code">{{detail.recruit_code}}</text></view>
 				<view class="labelList">
 					招生范围：
 					<view class="labelList-item u-skeleton-fillet" v-if="detail.recruit_type_education">
@@ -369,7 +369,7 @@
 					historyRecord.unshift({
 						id: this.detail.id,
 						name: this.detail.name,
-						property: this.detail.prototype,
+						property: this.detail.property,
 						college_level: this.detail.college_level,
 						province: this.detail.province,
 						city: this.detail.city,
@@ -617,10 +617,12 @@
 			},
 			//进入详情
 			goDetail(item) {
+				console.log(item)
 				if (item.hasOwnProperty('image_url')) {
 					let urlList = item.items.map((item, index) => {
 						return item.image_url
 					})
+					console.log(urlList)
 					uni.previewImage({
 						current: urlList[0],
 						urls: urlList

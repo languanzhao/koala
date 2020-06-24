@@ -43,16 +43,16 @@ var publicFilters = _interopRequireWildcard(__webpack_require__(/*! @/common/pub
 
 var _vueJsonp = _interopRequireDefault(__webpack_require__(/*! vue-jsonp */ 40));function _getRequireWildcardCache() {if (typeof WeakMap !== "function") return null;var cache = new WeakMap();_getRequireWildcardCache = function _getRequireWildcardCache() {return cache;};return cache;}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;}if (obj === null || typeof obj !== "object" && typeof obj !== "function") {return { default: obj };}var cache = _getRequireWildcardCache();if (cache && cache.has(obj)) {return cache.get(obj);}var newObj = {};var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;if (desc && (desc.get || desc.set)) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}newObj.default = obj;if (cache) {cache.set(obj, newObj);}return newObj;}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}_vue.default.prototype.$store = _store.default; //数据请求
 // https://shop.test.gzzhongw.net/   http://shop.test/
-_vue.default.prototype.$baseUrl = 'https://shop.test.gzzhongw.net/';_vue.default.prototype.$http = _request.request; //项目
-_vue.default.prototype.$projectUrl = 'https://koala.gzzhongw.net/';_vue.default.prototype.$contactPhone = '13544412322'; //  全局组件之间通信
+// Vue.prototype.$baseUrl = 'https://shop.test.gzzhongw.net/'
+_vue.default.prototype.$http = _request.request; //项目
+_vue.default.prototype.$projectUrl = 'https://koala.gzzhongw.net/'; // Vue.prototype.$contactPhone = '13544412322'
+//  全局组件之间通信
 _vue.default.prototype.$eventHub = _vue.default.prototype.$eventHub || new _vue.default(); // 巴士
 //兼容H5api方法 setClipboardData getClipboardData saveImageToPhotosAlbum saveVideoToPhotosAlbum
 _vue.default.use(_uview.default); //全局过滤器
 Object.keys(publicFilters).forEach(function (key) {_vue.default.filter(key, publicFilters[key]);}); //逆地址解析
 _vue.default.use(_vueJsonp.default); //全局弹窗
-var uniPopup = function uniPopup() {__webpack_require__.e(/*! require.ensure | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then((function () {return resolve(__webpack_require__(/*! @/components/uni-popup/uni-popup */ 351));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};_vue.default.component('uni-popup', uniPopup);_vue.default.config.productionTip = false;_App.default.mpType = 'app';var app = new _vue.default(_objectSpread({},
-_App.default, {
-  store: _store.default }));var _default =
+var uniPopup = function uniPopup() {__webpack_require__.e(/*! require.ensure | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then((function () {return resolve(__webpack_require__(/*! @/components/uni-popup/uni-popup */ 351));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};_vue.default.component('uni-popup', uniPopup);_vue.default.config.productionTip = false;_App.default.mpType = 'app';var app = new _vue.default(_objectSpread({}, _App.default, { store: _store.default }));var _default =
 
 app;exports.default = _default;
 createApp(app).$mount();
@@ -552,10 +552,19 @@ var _vuex = __webpack_require__(/*! vuex */ 9);function _interopRequireDefault(o
 
 
 
+
+
     this.getStatusBarheight();
     this.getUserInfo();
   },
   onShow: function onShow() {
+    uni.request({
+      url: 'https://koala.gzzhongw.net/h6/config.json?time=' + Math.random().toString(36),
+      success: function success(res) {
+        console.log(res, 'config');
+        _vue.default.prototype.$baseUrl = res.data.baseUrl;
+        _vue.default.prototype.$contactPhone = res.data.contactPhone;
+      } });
 
   },
   onHide: function onHide() {

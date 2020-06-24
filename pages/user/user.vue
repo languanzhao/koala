@@ -294,6 +294,7 @@
 			this.showOper = true
 		},
 		onUnload(){
+			
 			// this.showOper = true
 		},
 		methods: {
@@ -380,12 +381,8 @@
 					// #endif
 					
 					// #ifndef APP-PLUS
-						let url = '/sub_user/pages/poster/index'
-						if(this.roles && this.roles[0]){
-							url = url + '?bool=true'
-						}
 						uni.navigateTo({
-							url
+							url:'/sub_user/pages/poster/index'
 						})
 					// #endif
 				})

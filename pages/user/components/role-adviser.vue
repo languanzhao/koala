@@ -22,7 +22,7 @@
 					团员：
 				{{info.koala.growth_values.current ? (info.koala.growth_values.current.member_count ? info.koala.growth_values.current.member_count : 0) : 0}}
 				</view>
-				<view class="num">
+				<view class="num" v-if="info.koala.growth_values.next">
 					<view class="title" v-if="info.koala.growth_values.current && info.koala.growth_values.next" >
 						成长值:
 						{{info.koala.growth_values.current ? (info.koala.growth_values.current.registration_count ? info.koala.growth_values.current.registration_count : 0) : 0}}/
@@ -30,7 +30,7 @@
 					<view class="processPercent" v-if="info.koala.growth_values.current && info.koala.growth_values.next">
 						<view class="processing" :style="{width:parseInt((info.koala.growth_values.current.registration_count/info.koala.growth_values.next.registration_count)*100) + '%'}">
 							<view class="tip">
-								<view class="percent-num">{{ parseInt((info.koala.growth_values.current.registration_count/info.koala.growth_values.next.registration_count)*100) + '%'}}</view>
+								<view class="percent-num">{{ number + '%'}}</view>
 							</view>
 						</view>
 					</view>
@@ -54,11 +54,14 @@
 		},
 		data(){
 			return {
-		
+		         number:0
 			}
 		},
 		computed: {
 			
+		},
+		mounted() {		
+			this.judge()
 		},
 		onLoad(){
 			
@@ -72,6 +75,24 @@
 					})
 				})
 			},
+			
+			// 成长值优化
+			judge(){
+				this.number = (this.info.koala.growth_values.current.registration_count/this.info.koala.growth_values.next.registration_count ) * 100
+				if(this.number!=0){
+				    let num  = this.number.toString().split(".")[1]
+				      if(num){
+					      if(num.toString().length<2){
+						  this.number=this.number.toFixed(1)
+					      }else if(num.toString().length>=2){
+						  this.number=this.number.toFixed(2)
+					      }
+				     }else{
+					     parseInt(this.number)
+				     }
+				}
+			},
+			
 			//绑定微信
 			settingClick(){
 				checkLogin().then(() => {

@@ -210,7 +210,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var _api = _interopRequireDefault(__webpack_require__(/*! @/common/api.js */ 8));
 var _vuex = __webpack_require__(/*! vuex */ 9);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 {
@@ -222,15 +221,17 @@ var _vuex = __webpack_require__(/*! vuex */ 9);function _interopRequireDefault(o
       receivedNum: 0,
       taskTotalNum: 0,
       finiseLength: 0,
+      receivedLength: 0,
       obj: null,
       statusList: {
         'pending': '去完成',
         'underway': '审核中',
         'success': '领取',
         'failed': '去完成',
-        'received': '已领取' },
+        'received': '已完成' },
 
-      taskList: [] };
+      taskList: [],
+      taskProcessList: [] };
 
   },
   computed: _objectSpread({},
@@ -260,6 +261,30 @@ var _vuex = __webpack_require__(/*! vuex */ 9);function _interopRequireDefault(o
         }
         //已完成的数量
         var finishList = res.data.filter(function (item) {return item.status === 'success' || item.status === 'received';});
+
+        //已领取的数量
+        var receivedList = res.data.filter(function (item) {return item.status === 'received';});
+        _this.taskProcessList = [
+        {
+          num: 1,
+          completed: 'https://koala.gzzhongw.net/koala_images/task/success01.png',
+          unCompleted: 'https://koala.gzzhongw.net/koala_images/task/none01.png' },
+
+        {
+          num: 2,
+          completed: 'https://koala.gzzhongw.net/koala_images/task/success02.png',
+          unCompleted: 'https://koala.gzzhongw.net/koala_images/task/none02.png' },
+
+        {
+          num: 3,
+          completed: 'https://koala.gzzhongw.net/koala_images/task/success03.png',
+          unCompleted: 'https://koala.gzzhongw.net/koala_images/task/none03.png' }];
+
+
+        _this.receivedLength = receivedList.length;
+        _this.taskProcessList.splice(receivedList.length, 0, {
+          num: receivedList.length,
+          completed: 'https://koala.gzzhongw.net/koala_images/task/huojian.png' });
 
         _this.finiseLength = finishList.length;
         _this.receivedNum = receivedNum;

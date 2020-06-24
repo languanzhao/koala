@@ -193,10 +193,12 @@ export function login_wx_h5(type,paramsCode){
 			let REDIRECT_URI = encodeURIComponent(currentUrl)
 			let SCOPE ='snsapi_userinfo'
 			let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${APPID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=${SCOPE}&state=STATE#wechat_redirect`
-			if(!loginCode && !code){//没授权
+			if(!loginCode && !code){ //没授权
 				window.location.replace(url)
-			}else{ 
+			}else if(!loginCode){
 				window.sessionStorage.setItem('loginCode',code)
+				history.back()
+			}else{ 
 				if(!that.$store.state.userInfo.id){
 					//用户没有登录
 					that.$http({

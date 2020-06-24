@@ -3,7 +3,7 @@
 		<view class="" v-if="weapp_check_bool">
 			<view class="u-skeleton">
 				<!-- 搜索 -->
-				<view class="index-header">
+				<view class="index-header" v-if="schoolListType">
 					<view class="title">考拉上学</view>
 					<view class="search u-skeleton-fillet" @click="searchLink">
 						<text class="iconfont icon-search"></text>
@@ -12,7 +12,7 @@
 					<view class="iconfont shaixuan icon-shuaixuan" @click="chooseShowClick"></view>
 				</view>
 				<!-- 条件选择 -->
-				<view class="condition" v-if="chooseShow">
+				<view class="condition" v-if="chooseShow&&schoolListType">
 					<view class="cond-left">
 						<view class="item" v-for="(item,index) of condLeftList" :key='index' @click="condLeftItemClick(item.type)" :style="{'color':currentType === item.type ? '#12ada9' : ''}">{{item.title}}</view>
 					</view>
@@ -46,7 +46,7 @@
 				</view>
 				<!-- 搜索 -->
 				<!-- 学校列表 -->
-				<school-list ref='schoolList' :list='schoolList' :scrollTop="scrollTop" :applyedBool="applyedBool"></school-list>
+				<school-list  ref='schoolList' :list='schoolList' :scrollTop="scrollTop" :applyedBool="applyedBool"></school-list>
 
 				<view class="nullData" v-if="schoolList && !schoolList[0]" style="text-align: center;margin-top: 100rpx;">
 					没有数据啦
@@ -109,6 +109,7 @@
 				conditionBool: false,
 				schoolType: schoolType(),
 				cityPickerValueDefault: [0, 0, 1],
+				schoolListType:false,
 				selectedCity: {
 					name: '',
 					code: ''
@@ -233,10 +234,8 @@
 
 			// #ifdef H5
 				login_wx_h5(1)
+				this.getIndexDataList()
 				this.share_h5()
-				// setTimeout(()=>{
-					this.getIndexDataList()
-				// },1000)
 			// #endif
 
 			// #ifdef MP-WEIXIN
@@ -262,6 +261,17 @@
 				this.selectedCity.name = selectedCity.name
 				this.selectedCity.code = selectedCity.code
 			}
+			// #ifdef H5
+			  var isPageHide = false;
+			  window.addEventListener('pageshow', function () {
+				   if (isPageHide) {
+						window.location.reload();
+					}
+			 });
+			 window.addEventListener('pagehide', function () {
+				   isPageHide = true;
+			 });
+			// #endif
 		},
 		onShow() {
 			this.unReadCount_api()
@@ -602,7 +612,7 @@
 					perPage: 5
 				}
 
-				if (this.$store.state.local_province) {
+				if (this.local_province) {
 					params.province = this.local_province
 				} else {
 					//获取用户位置（经纬度）
@@ -636,6 +646,7 @@
 					this.schoolList = list.concat(res.data.data || [])
 					this.current_page = res.data.meta.current_page
 					this.last_page = res.data.meta.last_page
+					this.schoolListType=true
 					uni.hideLoading()
 				}).catch(err => {
 					uni.hideLoading()

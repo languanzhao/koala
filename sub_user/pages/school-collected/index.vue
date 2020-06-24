@@ -58,7 +58,6 @@
 				uni.setNavigationBarTitle({
 					title:"我的浏览记录"
 				})
-				// this.list = app.globalData.historyRecord
 				//浏览记录数组去重
 				  let obj = {}; 
 				  this.list = app.globalData.historyRecord.reduce((item, next)=> {
@@ -104,7 +103,6 @@
 			//选中
 			selectedList(e){
 				this.checkedList = e
-				console.log(this.list)
 			},
 			
 			//删除

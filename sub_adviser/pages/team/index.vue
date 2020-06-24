@@ -30,7 +30,7 @@
 			<view class="item" v-for="(item,index) of list" :key='index'>
 				<image class="image" :src="item.avatar"></image>
 				<view class="center">
-					<view class="name">{{item.name}}<text v-if="item.is_counselor">{{item.growth_values.level.name}}</text></view>
+					<view class="name">{{item.name || ''}}<text v-if="item.is_counselor">{{item.growth_values.level.name}}</text></view>
 					<view class="date">绑定时间：{{item.bound_at}}</view>
 				</view>
 				<view class="num" v-if="item.growth_values && item.growth_values.current">{{item.growth_values.current.direct_count || 0}}个邀请</view>
@@ -55,10 +55,12 @@
 			return {
 				current:0,
 				current_page:1,
+				last_page:0,
 				info:{
 					koala:{}
 				},
 				list:null,
+				apiUrl:'',
 				tabList:[
 					{
 						iconfont:'icon-zhiyao',
@@ -107,24 +109,25 @@
 				}else if(index === 2){
 					apiUrl = api.fans
 				}
+				this.apiUrl = apiUrl
+				this.current_page = 1
+				this.last_page = 0
 				this.list = null
-				this.getDataList(apiUrl)
+				this.getDataList()
 			},
 			//获取对应数据
-			getDataList(apiUrl){
-					if(!apiUrl){
-						apiUrl = api.invitees
-					}
+			getDataList(){
 					let list = this.list || []
 					this.$http({
-						api: apiUrl,
+						api: this.apiUrl || api.invitees,
 						method: 'GET',
 						params:{
 							page:this.current_page
 						}
 					}).then(res => {
 					    this.list = list.concat(res.data.data || [])
-						this.current_page = res.meta.current_page
+						this.current_page = res.data.meta.current_page
+						this.last_page = res.data.meta.last_page
 					}).catch(err => {
 					})
 			},

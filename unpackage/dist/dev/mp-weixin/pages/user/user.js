@@ -43,16 +43,16 @@ var publicFilters = _interopRequireWildcard(__webpack_require__(/*! @/common/pub
 
 var _vueJsonp = _interopRequireDefault(__webpack_require__(/*! vue-jsonp */ 40));function _getRequireWildcardCache() {if (typeof WeakMap !== "function") return null;var cache = new WeakMap();_getRequireWildcardCache = function _getRequireWildcardCache() {return cache;};return cache;}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;}if (obj === null || typeof obj !== "object" && typeof obj !== "function") {return { default: obj };}var cache = _getRequireWildcardCache();if (cache && cache.has(obj)) {return cache.get(obj);}var newObj = {};var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;if (desc && (desc.get || desc.set)) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}newObj.default = obj;if (cache) {cache.set(obj, newObj);}return newObj;}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}_vue.default.prototype.$store = _store.default; //数据请求
 // https://shop.test.gzzhongw.net/   http://shop.test/
-_vue.default.prototype.$baseUrl = 'https://shop.test.gzzhongw.net/';_vue.default.prototype.$http = _request.request; //项目
-_vue.default.prototype.$projectUrl = 'https://koala.gzzhongw.net/';_vue.default.prototype.$contactPhone = '13544412322'; //  全局组件之间通信
+// Vue.prototype.$baseUrl = 'https://shop.test.gzzhongw.net/'
+_vue.default.prototype.$http = _request.request; //项目
+_vue.default.prototype.$projectUrl = 'https://koala.gzzhongw.net/'; // Vue.prototype.$contactPhone = '13544412322'
+//  全局组件之间通信
 _vue.default.prototype.$eventHub = _vue.default.prototype.$eventHub || new _vue.default(); // 巴士
 //兼容H5api方法 setClipboardData getClipboardData saveImageToPhotosAlbum saveVideoToPhotosAlbum
 _vue.default.use(_uview.default); //全局过滤器
 Object.keys(publicFilters).forEach(function (key) {_vue.default.filter(key, publicFilters[key]);}); //逆地址解析
 _vue.default.use(_vueJsonp.default); //全局弹窗
-var uniPopup = function uniPopup() {__webpack_require__.e(/*! require.ensure | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then((function () {return resolve(__webpack_require__(/*! @/components/uni-popup/uni-popup */ 351));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};_vue.default.component('uni-popup', uniPopup);_vue.default.config.productionTip = false;_App.default.mpType = 'app';var app = new _vue.default(_objectSpread({},
-_App.default, {
-  store: _store.default }));var _default =
+var uniPopup = function uniPopup() {__webpack_require__.e(/*! require.ensure | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then((function () {return resolve(__webpack_require__(/*! @/components/uni-popup/uni-popup */ 351));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};_vue.default.component('uni-popup', uniPopup);_vue.default.config.productionTip = false;_App.default.mpType = 'app';var app = new _vue.default(_objectSpread({}, _App.default, { store: _store.default }));var _default =
 
 app;exports.default = _default;
 createApp(app).$mount();
@@ -517,6 +517,7 @@ var app = getApp();var _default =
     this.showOper = true;
   },
   onUnload: function onUnload() {
+
     // this.showOper = true
   },
   methods: {
@@ -596,19 +597,15 @@ var app = getApp();var _default =
       }
     },
     //分享入口
-    shareClick: function shareClick() {var _this5 = this;
+    shareClick: function shareClick() {
       (0, _utils.checkLogin)().then(function () {
 
 
 
 
 
-        var url = '/sub_user/pages/poster/index';
-        if (_this5.roles && _this5.roles[0]) {
-          url = url + '?bool=true';
-        }
         uni.navigateTo({
-          url: url });
+          url: '/sub_user/pages/poster/index' });
 
 
       });
@@ -628,16 +625,16 @@ var app = getApp();var _default =
       }
     },
     //获取我的报名
-    getApplication: function getApplication() {var _this6 = this;
+    getApplication: function getApplication() {var _this5 = this;
       this.$http({
         api: _api.default.latestApplications,
         method: 'GET' }).
       then(function (res) {
-        _this6.applyProcess = res.data;
+        _this5.applyProcess = res.data;
         if (res.data.closed === false) {
           if (res.data.return_status != 'success') {
             if (res.data.pass_status === 'success' || res.data.pass_status === 'ship' || res.data.pass_status === 'finish') {
-              _this6.showTask = true;
+              _this5.showTask = true;
               console.log('aaaaaaaa');
             }
           }
@@ -647,23 +644,23 @@ var app = getApp();var _default =
       });
     },
     //用户角色
-    getUserRoles: function getUserRoles() {var _this7 = this;
+    getUserRoles: function getUserRoles() {var _this6 = this;
       this.$http({
         api: _api.default.getUserRoles,
         method: 'GET' }).
       then(function (roles) {
         var data = roles.data.data;
         if (data && data[0]) {
-          if (!_this7.roles[0]) {
-            _this7.$http({
+          if (!_this6.roles[0]) {
+            _this6.$http({
               api: _api.default.getUserInfo,
               method: 'GET' }).
             then(function (res) {
-              _this7.info = res.data;
-              _this7.$store.commit('setUserInfo', res.data);
+              _this6.info = res.data;
+              _this6.$store.commit('setUserInfo', res.data);
             }).catch(function (err) {});
           }
-          _this7.$store.commit('setRoles', data);
+          _this6.$store.commit('setRoles', data);
         }
       }).catch(function (err) {
 
@@ -997,10 +994,19 @@ var _vuex = __webpack_require__(/*! vuex */ 9);function _interopRequireDefault(o
 
 
 
+
+
     this.getStatusBarheight();
     this.getUserInfo();
   },
   onShow: function onShow() {
+    uni.request({
+      url: 'https://koala.gzzhongw.net/h6/config.json?time=' + Math.random().toString(36),
+      success: function success(res) {
+        console.log(res, 'config');
+        _vue.default.prototype.$baseUrl = res.data.baseUrl;
+        _vue.default.prototype.$contactPhone = res.data.contactPhone;
+      } });
 
   },
   onHide: function onHide() {
